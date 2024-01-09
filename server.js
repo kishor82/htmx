@@ -20,7 +20,9 @@ app.get("/users", async (req, res) => {
   //   { id: 3, name: "Modi" },
   // ];
   const limit = +req.query.limit || 10;
-  const response = await fetch(`https://jsonplaceholder.typicode.com/users?_limit=${limit}`);
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/users?_limit=${limit}`
+  );
   const users = await response.json();
 
   res.send(`
@@ -33,20 +35,34 @@ app.get("/users", async (req, res) => {
 
 // Handle POST request for temp conversion
 
-
-app.post('/convert', (req,res) => {
+app.post("/convert", (req, res) => {
   const fahrenheit = parseFloat(req.body.fahrenheit);
-  const celsius = (fahrenheit -32) * (5/9)
+  const celsius = (fahrenheit - 32) * (5 / 9);
 
   res.send(`
     <p>
       ${fahrenheit} degrees fahrenheit is equal to ${celsius} degrees celsius
     </p>
-  `)
-    
-    
-  
-})
+  `);
+});
+
+let counter = 0;
+// Handler GET request for polling example
+app.get("/poll", (req, res) => {
+  counter++;
+
+  const data = { value: counter };
+
+  res.json(data);
+});
+
+let currentTemperature = 20;
+// Handle GET request for weather
+app.get("/get-temperature", (req, res) => {
+  currentTemperature += Math.random() * 2 - 1; // Random temp change
+  res.send(currentTemperature.toFixed(1) + "°C");
+});
+
 // Start the server
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
