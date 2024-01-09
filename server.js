@@ -31,6 +31,22 @@ app.get("/users", async (req, res) => {
   `);
 });
 
+// Handle POST request for temp conversion
+
+
+app.post('/convert', (req,res) => {
+  const fahrenheit = parseFloat(req.body.fahrenheit);
+  const celsius = (fahrenheit -32) * (5/9)
+
+  res.send(`
+    <p>
+      ${fahrenheit} degrees fahrenheit is equal to ${celsius} degrees celsius
+    </p>
+  `)
+    
+    
+  
+})
 // Start the server
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
